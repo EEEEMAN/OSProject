@@ -1,0 +1,662 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+g_cursorOffset      0x4               bin/mainKernel.o
+g_taskManager       0x14              bin/mainKernel.o
+g_KeyboardBuffer    0x88              bin/mainKernel.o
+g_timerCount2       0x4               bin/mainKernel.o
+g_memoryManager     0x1f44            bin/mainKernel.o
+g_consoleAttribute  0x1               bin/mainKernel.o
+g_KeyboardStatus    0x4               bin/mainKernel.o
+g_scheduleEnable    0x1               bin/mScheduler.o
+g_timerCount        0x4               bin/mainKernel.o
+
+Discarded input sections
+
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/mainKernel.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/GDT.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/utility2.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/tetris.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/PIC.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/IDT.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/keyboardControllor.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/shell.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/mMemory.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/mScheduler.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/mString.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/console.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/interruptHandler.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/mList.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/PCI.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/Task.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/PIT.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+                [!provide]                        PROVIDE (__executable_start, SEGMENT_START ("text-segment", 0x8048000))
+                0x0000000008048094                . = (SEGMENT_START ("text-segment", 0x8048000) + SIZEOF_HEADERS)
+
+.text           0x0000000000600000     0x3a70
+ *(.text .stub .text.* .gnu.linkonce.t.*)
+ .text          0x0000000000600000      0x1bd bin/mainKernel.o
+                0x0000000000600000                _entry
+ .text          0x00000000006001bd       0xd2 bin/GDT.o
+                0x00000000006001bd                setDescriptor
+                0x0000000000600220                initGDT
+ .text          0x000000000060028f       0xcb bin/utility2.o
+                0x000000000060028f                memcopy
+                0x00000000006002c4                memSet
+                0x00000000006002f6                memCmp
+ .text          0x000000000060035a       0x17 bin/tetris.o
+                0x000000000060035a                tetrisProcess
+ .text          0x0000000000600371      0x125 bin/PIC.o
+                0x0000000000600371                initPIC
+                0x0000000000600425                maskPIC
+                0x0000000000600466                sendEOI
+ .text          0x0000000000600496      0x4a5 bin/IDT.o
+                0x0000000000600496                initIDT
+                0x00000000006008ef                setIDTDescriptor
+ .text          0x000000000060093b      0x300 bin/keyboardControllor.o
+                0x000000000060093b                isOutBufferFull
+                0x000000000060096a                isInBufferFull
+                0x0000000000600999                activeKBC
+                0x00000000006009b1                activeKeyboard
+                0x0000000000600a0c                clearKBCBuffer
+                0x0000000000600a25                writeKBCCommand
+                0x0000000000600a70                readKBCStatus
+                0x0000000000600a85                writeKBCBuffer
+                0x0000000000600ad0                readKBCBuffer
+                0x0000000000600ae5                KBCechoTest
+                0x0000000000600b24                waitKBCOutBufferFull
+                0x0000000000600b57                convertScanCodeToASCIICode
+                0x0000000000600b97                waitACK
+                0x0000000000600be2                getScancodeType
+ .text          0x0000000000600c3b      0xd1e bin/shell.o
+                0x0000000000600c3b                shellRun
+                0x0000000000600cbe                keyboardBufferHandler
+                0x0000000000600e65                CommandCompareAndExcute
+                0x0000000000600f17                showCommandList
+                0x0000000000600f64                setTextColor
+                0x000000000060117b                clear
+                0x000000000060118d                pciDevice
+                0x0000000000601229                showEFLAGS
+                0x000000000060124c                showCR0
+                0x000000000060126f                showMemory
+                0x00000000006012ce                showTask
+                0x000000000060135b                killTask
+                0x0000000000601414                showTimer_sub
+                0x000000000060146d                showTimer
+                0x00000000006014a0                cursorAnimation_sub
+                0x0000000000601515                lineAnimationR_sub
+                0x000000000060167e                lineAnimationL_sub
+                0x00000000006017e7                animationTest
+ .text          0x0000000000601959      0x3ac bin/mMemory.o
+                0x0000000000601959                checkMemory
+                0x0000000000601a16                initMemoryManager
+                0x0000000000601a55                mMalloc
+                0x0000000000601b27                mFree
+ .text          0x0000000000601d05      0x3be bin/mScheduler.o
+                0x0000000000601d05                setEnableScheduler
+                0x0000000000601d2a                initTaskPool
+                0x0000000000601dda                schedule
+                0x0000000000601ef3                createTask
+                0x0000000000601fe7                deleteTask
+ .text          0x00000000006020c3      0x3f2 bin/mString.o
+                0x00000000006020c3                getStrLen
+                0x00000000006020eb                makeStrByVaList
+                0x000000000060222c                itoa
+                0x000000000060230a                itoa16
+                0x000000000060239e                mAtoi
+                0x0000000000602417                reverseStr
+                0x0000000000602491                csPrintf
+ .text          0x00000000006024b5      0x51d bin/console.o
+                0x00000000006024b5                initVideoMemory
+                0x00000000006024ca                clearScreen
+                0x000000000060252a                printString
+                0x000000000060259a                printStringWhereCursor
+                0x0000000000602712                printChar
+                0x0000000000602751                setCursor
+                0x00000000006027b7                cPrintf
+                0x0000000000602805                removeCharactor
+                0x000000000060285a                bClearScreen
+                0x00000000006028a0                bPrintString
+                0x0000000000602902                bPrintChar
+                0x0000000000602932                bPrintf
+                0x0000000000602990                bRemoveCharactor
+ .text          0x00000000006029d2      0x108 bin/interruptHandler.o
+                0x00000000006029d2                defaultHandler
+                0x0000000000602a06                UnknownHandler
+                0x0000000000602a24                keyboardHandler
+                0x0000000000602aa5                testTimerHandler
+ .text          0x0000000000602ada      0x3ba bin/mList.o
+                0x0000000000602ada                initList
+                0x0000000000602afd                insertItemBack
+                0x0000000000602b73                deleteItemFront
+                0x0000000000602c1a                deleteItemBack
+                0x0000000000602cf6                popItem
+                0x0000000000602d1b                removeItem
+                0x0000000000602dde                searchItem
+                0x0000000000602e3f                getItem
+ .text          0x0000000000602e94       0x65 bin/PCI.o
+                0x0000000000602e94                getPCICSData
+ .text          0x0000000000602ef9      0x18d bin/Task.o
+                0x0000000000602ef9                initTSSDescriptors
+                0x0000000000602f77                initTSS
+ .text          0x0000000000603086       0xe4 bin/PIT.o
+                0x0000000000603086                initPIT
+                0x0000000000603102                mSleep
+ *fill*         0x000000000060316a        0x6 90909090
+ .text          0x0000000000603170      0x145 bin/asmfunc2.o
+                0x0000000000603170                in8bits
+                0x000000000060317f                out8bits
+                0x0000000000603193                in32bits
+                0x00000000006031a2                out32bits
+                0x00000000006031b6                loadIDT
+                0x00000000006031de                enableInterrupt
+                0x00000000006031e0                disableInterrupt
+                0x00000000006031e2                hltCall
+                0x00000000006031e4                loadGDT
+                0x0000000000603223                loadTR
+                0x0000000000603230                taskswitch
+                0x0000000000603235                getEFLAGS
+                0x0000000000603238                setEFLAGS
+                0x0000000000603244                getCR0Register
+                0x0000000000603248                setCR0Register
+                0x0000000000603255                getInterruptStatus
+                0x000000000060325c                setInterruptStatus
+                0x0000000000603270                memoryTest
+ *fill*         0x00000000006032b5        0xb 90909090
+ .text          0x00000000006032c0      0x7b0 bin/ISR.o
+                0x00000000006032c0                isrDivideZero
+                0x00000000006032f7                isrDebugMode
+                0x000000000060332e                isrNMI
+                0x0000000000603365                isrINT3
+                0x000000000060339c                isrOverflow
+                0x00000000006033d3                isrOverAddress
+                0x000000000060340a                isrNonExistCommand
+                0x0000000000603441                isrNonExistDevice
+                0x0000000000603478                isrContinuousException
+                0x00000000006034b7                isrCoprocessorError
+                0x00000000006034ee                isrTSSError
+                0x000000000060352d                isrOverSegment
+                0x000000000060356c                isrStackSegmentError
+                0x00000000006035ab                isrViolidProtectRule
+                0x00000000006035ea                isrPageFault
+                0x0000000000603629                isrNonDefiled
+                0x0000000000603660                isrFloatingError
+                0x0000000000603697                isrAligndError
+                0x00000000006036d6                isrMachineCheckError
+                0x000000000060370d                isrSIMDError
+                0x0000000000603744                isrVirtualizationError
+                0x000000000060377b                isrControlProtectionException
+                0x00000000006037b2                isrDefault22
+                0x00000000006037e9                isrDefault23
+                0x0000000000603820                isrDefault24
+                0x0000000000603857                isrDefault25
+                0x000000000060388e                isrDefault26
+                0x00000000006038c5                isrDefault27
+                0x00000000006038fc                isrDefault28
+                0x0000000000603933                isrDefault29
+                0x000000000060396a                isrDefault31
+                0x00000000006039a1                isrSecurityError
+                0x00000000006039e0                isrTimerInterrupt
+                0x0000000000603a10                isrKeyboardInterrupt
+                0x0000000000603a40                isrDefault
+ *(.gnu.warning)
+
+.rodata         0x0000000000603a70      0x3d1
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata        0x0000000000603a70      0x15b bin/mainKernel.o
+ .rodata        0x0000000000603bcb      0x222 bin/shell.o
+ *fill*         0x0000000000603ded        0x3 
+ .rodata        0x0000000000603df0       0x51 bin/interruptHandler.o
+
+.rodata1
+ *(.rodata1)
+                0x0000000000604000                . = ALIGN (0x200)
+
+.data           0x0000000000604000      0x358
+ *(.data .data.* .gnu.linkonce.d.*)
+ .data          0x0000000000604000       0xb2 bin/mainKernel.o
+ .data          0x00000000006040b2        0x0 bin/GDT.o
+ .data          0x00000000006040b2        0x0 bin/utility2.o
+ .data          0x00000000006040b2        0x0 bin/tetris.o
+ .data          0x00000000006040b2        0x0 bin/PIC.o
+ .data          0x00000000006040b2        0x0 bin/IDT.o
+ *fill*         0x00000000006040b2        0xe 
+ .data          0x00000000006040c0       0xb2 bin/keyboardControllor.o
+ *fill*         0x0000000000604172        0xe 
+ .data          0x0000000000604180      0x118 bin/shell.o
+                0x0000000000604240                commands
+ .data          0x0000000000604298        0x0 bin/mMemory.o
+ .data          0x0000000000604298        0x0 bin/mScheduler.o
+ .data          0x0000000000604298        0x0 bin/mString.o
+ .data          0x0000000000604298        0x0 bin/console.o
+ *fill*         0x0000000000604298        0x8 
+ .data          0x00000000006042a0       0xb8 bin/interruptHandler.o
+                0x0000000000604354                curt
+ .data          0x0000000000604358        0x0 bin/mList.o
+ .data          0x0000000000604358        0x0 bin/PCI.o
+ .data          0x0000000000604358        0x0 bin/Task.o
+ .data          0x0000000000604358        0x0 bin/PIT.o
+
+.data1
+ *(.data1)
+                0x0000000000604358                __bss_start = .
+
+.bss            0x0000000000604360     0x4014
+ *(.dynbss)
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss           0x0000000000604360     0x2000 bin/mainKernel.o
+                0x0000000000604360                g_testStack
+                0x0000000000605360                g_testStack2
+ .bss           0x0000000000606360        0x0 bin/GDT.o
+ .bss           0x0000000000606360        0x0 bin/utility2.o
+ .bss           0x0000000000606360        0x0 bin/tetris.o
+ .bss           0x0000000000606360        0x0 bin/PIC.o
+ .bss           0x0000000000606360        0x0 bin/IDT.o
+ .bss           0x0000000000606360        0x0 bin/keyboardControllor.o
+ .bss           0x0000000000606360        0x0 bin/shell.o
+ .bss           0x0000000000606360        0x0 bin/mMemory.o
+ .bss           0x0000000000606360        0x0 bin/mScheduler.o
+ .bss           0x0000000000606360        0x0 bin/mString.o
+ .bss           0x0000000000606360        0x0 bin/console.o
+ .bss           0x0000000000606360        0x0 bin/interruptHandler.o
+ .bss           0x0000000000606360        0x0 bin/mList.o
+ .bss           0x0000000000606360        0x0 bin/PCI.o
+ .bss           0x0000000000606360        0x0 bin/Task.o
+ .bss           0x0000000000606360        0x0 bin/PIT.o
+ *(COMMON)
+ COMMON         0x0000000000606360     0x2010 bin/mainKernel.o
+                0x0000000000606360                g_cursorOffset
+                0x0000000000606364                g_taskManager
+                0x0000000000606380                g_KeyboardBuffer
+                0x0000000000606408                g_timerCount2
+                0x0000000000606420                g_memoryManager
+                0x0000000000608364                g_consoleAttribute
+                0x0000000000608368                g_KeyboardStatus
+                0x000000000060836c                g_timerCount
+ COMMON         0x0000000000608370        0x1 bin/mScheduler.o
+                0x0000000000608370                g_scheduleEnable
+                0x0000000000608374                . = ALIGN ((. != 0x0)?0x4:0x1)
+ *fill*         0x0000000000608371        0x3 
+                0x0000000000608374                . = ALIGN (0x4)
+                0x0000000000608374                . = ALIGN (0x4)
+                0x0000000000608374                _end = .
+                [!provide]                        PROVIDE (end, .)
+
+.interp
+ *(.interp)
+
+.note.gnu.build-id
+ *(.note.gnu.build-id)
+
+.hash
+ *(.hash)
+
+.gnu.hash
+ *(.gnu.hash)
+
+.dynsym
+ *(.dynsym)
+
+.dynstr
+ *(.dynstr)
+
+.gnu.version
+ *(.gnu.version)
+
+.gnu.version_d
+ *(.gnu.version_d)
+
+.gnu.version_r
+ *(.gnu.version_r)
+
+.rel.init
+ *(.rel.init)
+
+.rel.text       0x0000000000608374        0x0
+ *(.rel.text .rel.text.* .rel.gnu.linkonce.t.*)
+ .rel.text      0x0000000000608374        0x0 bin/mainKernel.o
+
+.rel.fini
+ *(.rel.fini)
+
+.rel.rodata
+ *(.rel.rodata .rel.rodata.* .rel.gnu.linkonce.r.*)
+
+.rel.data.rel.ro
+ *(.rel.data.rel.ro .rel.data.rel.ro.* .rel.gnu.linkonce.d.rel.ro.*)
+
+.rel.data
+ *(.rel.data .rel.data.* .rel.gnu.linkonce.d.*)
+
+.rel.tdata
+ *(.rel.tdata .rel.tdata.* .rel.gnu.linkonce.td.*)
+
+.rel.tbss
+ *(.rel.tbss .rel.tbss.* .rel.gnu.linkonce.tb.*)
+
+.rel.ctors
+ *(.rel.ctors)
+
+.rel.dtors
+ *(.rel.dtors)
+
+.rel.got        0x0000000000608374        0x0
+ *(.rel.got)
+ .rel.got       0x0000000000608374        0x0 bin/mainKernel.o
+
+.rel.bss
+ *(.rel.bss .rel.bss.* .rel.gnu.linkonce.b.*)
+
+.rel.ifunc
+ *(.rel.ifunc)
+
+.rel.plt        0x0000000000608374        0x0
+ *(.rel.plt)
+                [!provide]                        PROVIDE (__rel_iplt_start, .)
+ *(.rel.iplt)
+ .rel.iplt      0x0000000000608374        0x0 bin/mainKernel.o
+                [!provide]                        PROVIDE (__rel_iplt_end, .)
+
+.init
+ *(SORT(.init))
+
+.plt            0x0000000000608378        0x0
+ *(.plt)
+ *(.iplt)
+ .iplt          0x0000000000608378        0x0 bin/mainKernel.o
+
+.plt.got
+ *(.plt.got)
+
+.plt.sec
+ *(.plt.sec)
+
+.fini
+ *(SORT(.fini))
+                [!provide]                        PROVIDE (__etext, .)
+                [!provide]                        PROVIDE (_etext, .)
+                [!provide]                        PROVIDE (etext, .)
+
+.eh_frame_hdr
+ *(.eh_frame_hdr)
+ *(.eh_frame_entry .eh_frame_entry.*)
+
+.eh_frame       0x0000000000608374      0xb44
+ *(.eh_frame)
+ .eh_frame      0x0000000000608374       0x38 bin/mainKernel.o
+ .eh_frame      0x00000000006083ac       0x40 bin/GDT.o
+                                         0x58 (size before relaxing)
+ .eh_frame      0x00000000006083ec       0x60 bin/utility2.o
+                                         0x78 (size before relaxing)
+ .eh_frame      0x000000000060844c       0x1c bin/tetris.o
+                                         0x34 (size before relaxing)
+ .eh_frame      0x0000000000608468       0x60 bin/PIC.o
+                                         0x78 (size before relaxing)
+ .eh_frame      0x00000000006084c8       0x40 bin/IDT.o
+                                         0x58 (size before relaxing)
+ .eh_frame      0x0000000000608508      0x1c0 bin/keyboardControllor.o
+                                        0x1d8 (size before relaxing)
+ .eh_frame      0x00000000006086c8      0x22c bin/shell.o
+                                        0x244 (size before relaxing)
+ .eh_frame      0x00000000006088f4       0x80 bin/mMemory.o
+                                         0x98 (size before relaxing)
+ .eh_frame      0x0000000000608974       0xa0 bin/mScheduler.o
+                                         0xb8 (size before relaxing)
+ .eh_frame      0x0000000000608a14       0xe4 bin/mString.o
+                                         0xfc (size before relaxing)
+ .eh_frame      0x0000000000608af8      0x1a0 bin/console.o
+                                        0x1b8 (size before relaxing)
+ .eh_frame      0x0000000000608c98       0x80 bin/interruptHandler.o
+                                         0x98 (size before relaxing)
+ .eh_frame      0x0000000000608d18      0x100 bin/mList.o
+                                        0x118 (size before relaxing)
+ .eh_frame      0x0000000000608e18       0x20 bin/PCI.o
+                                         0x38 (size before relaxing)
+ .eh_frame      0x0000000000608e38       0x40 bin/Task.o
+                                         0x58 (size before relaxing)
+ .eh_frame      0x0000000000608e78       0x40 bin/PIT.o
+                                         0x58 (size before relaxing)
+ *(.eh_frame.*)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+
+.gnu_extab
+ *(.gnu_extab*)
+
+.exception_ranges
+ *(.exception_ranges .exception_ranges*)
+                0x000000000060a000                . = DATA_SEGMENT_ALIGN (CONSTANT (MAXPAGESIZE), CONSTANT (COMMONPAGESIZE))
+
+.eh_frame
+ *(.eh_frame)
+ *(.eh_frame.*)
+
+.gnu_extab
+ *(.gnu_extab)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+
+.exception_ranges
+ *(.exception_ranges .exception_ranges*)
+
+.tdata
+ *(.tdata .tdata.* .gnu.linkonce.td.*)
+
+.tbss
+ *(.tbss .tbss.* .gnu.linkonce.tb.*)
+ *(.tcommon)
+
+.preinit_array  0x000000000060a000        0x0
+                [!provide]                        PROVIDE (__preinit_array_start, .)
+ *(.preinit_array)
+                [!provide]                        PROVIDE (__preinit_array_end, .)
+
+.init_array     0x000000000060a000        0x0
+                [!provide]                        PROVIDE (__init_array_start, .)
+ *(SORT(.init_array.*) SORT(.ctors.*))
+ *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
+                [!provide]                        PROVIDE (__init_array_end, .)
+
+.fini_array     0x000000000060a000        0x0
+                [!provide]                        PROVIDE (__fini_array_start, .)
+ *(SORT(.fini_array.*) SORT(.dtors.*))
+ *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
+                [!provide]                        PROVIDE (__fini_array_end, .)
+
+.ctors
+ *crtbegin.o(.ctors)
+ *crtbegin?.o(.ctors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+ *(SORT(.ctors.*))
+ *(.ctors)
+
+.dtors
+ *crtbegin.o(.dtors)
+ *crtbegin?.o(.dtors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+ *(SORT(.dtors.*))
+ *(.dtors)
+
+.jcr
+ *(.jcr)
+
+.data.rel.ro
+ *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*)
+ *(.data.rel.ro .data.rel.ro.* .gnu.linkonce.d.rel.ro.*)
+
+.dynamic
+ *(.dynamic)
+
+.got            0x000000000060a000        0x0
+ *(.got)
+ .got           0x000000000060a000        0x0 bin/mainKernel.o
+ *(.igot)
+                0x000000000060a000                . = DATA_SEGMENT_RELRO_END (., (SIZEOF (.got.plt) >= 0xc)?0xc:0x0)
+
+.got.plt        0x000000000060a000        0x0
+ *(.got.plt)
+ .got.plt       0x000000000060a000        0x0 bin/mainKernel.o
+ *(.igot.plt)
+ .igot.plt      0x000000000060a000        0x0 bin/mainKernel.o
+                0x000000000060a000                _edata = .
+                [!provide]                        PROVIDE (edata, .)
+                0x000000000060a000                . = .
+                0x000000000060a000                . = DATA_SEGMENT_END (.)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x0000000000000000       0x11
+ *(.comment)
+ .comment       0x0000000000000000       0x11 bin/mainKernel.o
+                                         0x12 (size before relaxing)
+ .comment       0x0000000000000011       0x12 bin/GDT.o
+ .comment       0x0000000000000011       0x12 bin/utility2.o
+ .comment       0x0000000000000011       0x12 bin/tetris.o
+ .comment       0x0000000000000011       0x12 bin/PIC.o
+ .comment       0x0000000000000011       0x12 bin/IDT.o
+ .comment       0x0000000000000011       0x12 bin/keyboardControllor.o
+ .comment       0x0000000000000011       0x12 bin/shell.o
+ .comment       0x0000000000000011       0x12 bin/mMemory.o
+ .comment       0x0000000000000011       0x12 bin/mScheduler.o
+ .comment       0x0000000000000011       0x12 bin/mString.o
+ .comment       0x0000000000000011       0x12 bin/console.o
+ .comment       0x0000000000000011       0x12 bin/interruptHandler.o
+ .comment       0x0000000000000011       0x12 bin/mList.o
+ .comment       0x0000000000000011       0x12 bin/PCI.o
+ .comment       0x0000000000000011       0x12 bin/Task.o
+ .comment       0x0000000000000011       0x12 bin/PIT.o
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges
+ *(.debug_aranges)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info
+ *(.debug_info .gnu.linkonce.wi.*)
+
+.debug_abbrev
+ *(.debug_abbrev)
+
+.debug_line
+ *(.debug_line .debug_line.* .debug_line_end)
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str
+ *(.debug_str)
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.debug_pubtypes
+ *(.debug_pubtypes)
+
+.debug_ranges
+ *(.debug_ranges)
+
+.debug_macro
+ *(.debug_macro)
+
+.debug_addr
+ *(.debug_addr)
+
+.gnu.attributes
+ *(.gnu.attributes)
+
+/DISCARD/
+ *(.note.GNU-stack)
+ *(.gnu_debuglink)
+ *(.gnu.lto_*)
+LOAD bin/mainKernel.o
+LOAD bin/GDT.o
+LOAD bin/utility2.o
+LOAD bin/tetris.o
+LOAD bin/PIC.o
+LOAD bin/IDT.o
+LOAD bin/keyboardControllor.o
+LOAD bin/shell.o
+LOAD bin/mMemory.o
+LOAD bin/mScheduler.o
+LOAD bin/mString.o
+LOAD bin/console.o
+LOAD bin/interruptHandler.o
+LOAD bin/mList.o
+LOAD bin/PCI.o
+LOAD bin/Task.o
+LOAD bin/PIT.o
+LOAD bin/asmfunc2.o
+LOAD bin/ISR.o
+OUTPUT(bin/kernel.elf elf32-i386)

@@ -1,0 +1,360 @@
+
+Discarded input sections
+
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/kernel.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/page.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 bin/utility.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+                [!provide]                        PROVIDE (__executable_start, SEGMENT_START ("text-segment", 0x8048000))
+                0x0000000008048074                . = (SEGMENT_START ("text-segment", 0x8048000) + SIZEOF_HEADERS)
+
+.text           0x0000000000008000      0x103
+ *(.text .stub .text.* .gnu.linkonce.t.*)
+ .text          0x0000000000008000       0x3a bin/kernel.o
+                0x0000000000008000                _entry
+ *fill*         0x000000000000803a        0x6 90909090
+ .text          0x0000000000008040       0x32 bin/asmfunc.o
+                0x0000000000008040                jumpToMainKernel
+                0x0000000000008052                setCR3Register
+                0x000000000000805d                activePaging
+                0x0000000000008072                activeA20Gate
+ .text          0x0000000000008072       0x55 bin/page.o
+                0x0000000000008072                initPage
+ .text          0x00000000000080c7       0x3c bin/utility.o
+                0x00000000000080c7                memcopy
+ *(.gnu.warning)
+
+.rodata
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+
+.rodata1
+ *(.rodata1)
+                0x0000000000008200                . = ALIGN (0x200)
+
+.data           0x0000000000008200        0x0
+ *(.data .data.* .gnu.linkonce.d.*)
+ .data          0x0000000000008200        0x0 bin/kernel.o
+ .data          0x0000000000008200        0x0 bin/page.o
+ .data          0x0000000000008200        0x0 bin/utility.o
+
+.data1
+ *(.data1)
+                0x0000000000008200                __bss_start = .
+
+.bss            0x0000000000008200        0x0
+ *(.dynbss)
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss           0x0000000000008200        0x0 bin/kernel.o
+ .bss           0x0000000000008200        0x0 bin/page.o
+ .bss           0x0000000000008200        0x0 bin/utility.o
+ *(COMMON)
+                0x0000000000008200                . = ALIGN ((. != 0x0)?0x4:0x1)
+                0x0000000000008200                . = ALIGN (0x4)
+                0x0000000000008200                . = ALIGN (0x4)
+                0x0000000000008200                _end = .
+                [!provide]                        PROVIDE (end, .)
+
+.interp
+ *(.interp)
+
+.note.gnu.build-id
+ *(.note.gnu.build-id)
+
+.hash
+ *(.hash)
+
+.gnu.hash
+ *(.gnu.hash)
+
+.dynsym
+ *(.dynsym)
+
+.dynstr
+ *(.dynstr)
+
+.gnu.version
+ *(.gnu.version)
+
+.gnu.version_d
+ *(.gnu.version_d)
+
+.gnu.version_r
+ *(.gnu.version_r)
+
+.rel.init
+ *(.rel.init)
+
+.rel.text
+ *(.rel.text .rel.text.* .rel.gnu.linkonce.t.*)
+
+.rel.fini
+ *(.rel.fini)
+
+.rel.rodata
+ *(.rel.rodata .rel.rodata.* .rel.gnu.linkonce.r.*)
+
+.rel.data.rel.ro
+ *(.rel.data.rel.ro .rel.data.rel.ro.* .rel.gnu.linkonce.d.rel.ro.*)
+
+.rel.data
+ *(.rel.data .rel.data.* .rel.gnu.linkonce.d.*)
+
+.rel.tdata
+ *(.rel.tdata .rel.tdata.* .rel.gnu.linkonce.td.*)
+
+.rel.tbss
+ *(.rel.tbss .rel.tbss.* .rel.gnu.linkonce.tb.*)
+
+.rel.ctors
+ *(.rel.ctors)
+
+.rel.dtors
+ *(.rel.dtors)
+
+.rel.got        0x0000000000008200        0x0
+ *(.rel.got)
+ .rel.got       0x0000000000008200        0x0 bin/kernel.o
+
+.rel.bss
+ *(.rel.bss .rel.bss.* .rel.gnu.linkonce.b.*)
+
+.rel.ifunc
+ *(.rel.ifunc)
+
+.rel.plt        0x0000000000008200        0x0
+ *(.rel.plt)
+                [!provide]                        PROVIDE (__rel_iplt_start, .)
+ *(.rel.iplt)
+ .rel.iplt      0x0000000000008200        0x0 bin/kernel.o
+                [!provide]                        PROVIDE (__rel_iplt_end, .)
+
+.init
+ *(SORT(.init))
+
+.plt            0x0000000000008200        0x0
+ *(.plt)
+ *(.iplt)
+ .iplt          0x0000000000008200        0x0 bin/kernel.o
+
+.plt.got
+ *(.plt.got)
+
+.plt.sec
+ *(.plt.sec)
+
+.fini
+ *(SORT(.fini))
+                [!provide]                        PROVIDE (__etext, .)
+                [!provide]                        PROVIDE (_etext, .)
+                [!provide]                        PROVIDE (etext, .)
+
+.eh_frame_hdr
+ *(.eh_frame_hdr)
+ *(.eh_frame_entry .eh_frame_entry.*)
+
+.eh_frame       0x0000000000008200       0x74
+ *(.eh_frame)
+ .eh_frame      0x0000000000008200       0x34 bin/kernel.o
+ .eh_frame      0x0000000000008234       0x20 bin/page.o
+                                         0x38 (size before relaxing)
+ .eh_frame      0x0000000000008254       0x20 bin/utility.o
+                                         0x38 (size before relaxing)
+ *(.eh_frame.*)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+
+.gnu_extab
+ *(.gnu_extab*)
+
+.exception_ranges
+ *(.exception_ranges .exception_ranges*)
+                0x000000000000a000                . = DATA_SEGMENT_ALIGN (CONSTANT (MAXPAGESIZE), CONSTANT (COMMONPAGESIZE))
+
+.eh_frame
+ *(.eh_frame)
+ *(.eh_frame.*)
+
+.gnu_extab
+ *(.gnu_extab)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+
+.exception_ranges
+ *(.exception_ranges .exception_ranges*)
+
+.tdata
+ *(.tdata .tdata.* .gnu.linkonce.td.*)
+
+.tbss
+ *(.tbss .tbss.* .gnu.linkonce.tb.*)
+ *(.tcommon)
+
+.preinit_array  0x000000000000a000        0x0
+                [!provide]                        PROVIDE (__preinit_array_start, .)
+ *(.preinit_array)
+                [!provide]                        PROVIDE (__preinit_array_end, .)
+
+.init_array     0x000000000000a000        0x0
+                [!provide]                        PROVIDE (__init_array_start, .)
+ *(SORT(.init_array.*) SORT(.ctors.*))
+ *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
+                [!provide]                        PROVIDE (__init_array_end, .)
+
+.fini_array     0x000000000000a000        0x0
+                [!provide]                        PROVIDE (__fini_array_start, .)
+ *(SORT(.fini_array.*) SORT(.dtors.*))
+ *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
+                [!provide]                        PROVIDE (__fini_array_end, .)
+
+.ctors
+ *crtbegin.o(.ctors)
+ *crtbegin?.o(.ctors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+ *(SORT(.ctors.*))
+ *(.ctors)
+
+.dtors
+ *crtbegin.o(.dtors)
+ *crtbegin?.o(.dtors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+ *(SORT(.dtors.*))
+ *(.dtors)
+
+.jcr
+ *(.jcr)
+
+.data.rel.ro
+ *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*)
+ *(.data.rel.ro .data.rel.ro.* .gnu.linkonce.d.rel.ro.*)
+
+.dynamic
+ *(.dynamic)
+
+.got            0x000000000000a000        0x0
+ *(.got)
+ .got           0x000000000000a000        0x0 bin/kernel.o
+ *(.igot)
+                0x000000000000a000                . = DATA_SEGMENT_RELRO_END (., (SIZEOF (.got.plt) >= 0xc)?0xc:0x0)
+
+.got.plt        0x000000000000a000        0x0
+ *(.got.plt)
+ .got.plt       0x000000000000a000        0x0 bin/kernel.o
+ *(.igot.plt)
+ .igot.plt      0x000000000000a000        0x0 bin/kernel.o
+                0x000000000000a000                _edata = .
+                [!provide]                        PROVIDE (edata, .)
+                0x000000000000a000                . = .
+                0x000000000000a000                . = DATA_SEGMENT_END (.)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x0000000000000000       0x11
+ *(.comment)
+ .comment       0x0000000000000000       0x11 bin/kernel.o
+                                         0x12 (size before relaxing)
+ .comment       0x0000000000000011       0x12 bin/page.o
+ .comment       0x0000000000000011       0x12 bin/utility.o
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges
+ *(.debug_aranges)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info
+ *(.debug_info .gnu.linkonce.wi.*)
+
+.debug_abbrev
+ *(.debug_abbrev)
+
+.debug_line
+ *(.debug_line .debug_line.* .debug_line_end)
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str
+ *(.debug_str)
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.debug_pubtypes
+ *(.debug_pubtypes)
+
+.debug_ranges
+ *(.debug_ranges)
+
+.debug_macro
+ *(.debug_macro)
+
+.debug_addr
+ *(.debug_addr)
+
+.gnu.attributes
+ *(.gnu.attributes)
+
+/DISCARD/
+ *(.note.GNU-stack)
+ *(.gnu_debuglink)
+ *(.gnu.lto_*)
+LOAD bin/kernel.o
+LOAD bin/asmfunc.o
+LOAD bin/page.o
+LOAD bin/utility.o
+OUTPUT(bin/kernel.elf elf32-i386)
