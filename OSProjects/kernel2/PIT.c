@@ -3,7 +3,6 @@
 
 void initPIT(WORD count, BOOL isPeriodic) {
 	g_timerCount = 0;
-	g_timerCount2 = 0;
 	out8bits(PIT_PORT_CONTROL, PIT_CONTROL_COUNTER0_ONCE);
 	if (isPeriodic == TRUE) {
 		out8bits(PIT_PORT_CONTROL, PIT_CONTROL_COUNTER0_PERIODIC);

@@ -7,19 +7,18 @@
 #include "asmfunc2.h"
 #include "keyboardControllor.h"
 #include "mString.h"
-#include "Task.h"
 #include "utility2.h"
 #include "shell.h"
 #include "mMemory.h"
 #include "mList.h"
 #include "mScheduler.h"
-
-DWORD g_testStack[1024] = { 0, };
-DWORD g_testStack2[1024] = { 0, };
+#include "task.h"
+#include "HDControllor.h"
 
 void _entry() {
 	//모니터화면 초기화
 	initVideoMemory();
+	cPrintf("kernel2 start...");
 	//커널 사이즈(섹터단위)를 가져옴
 	BYTE subKernelSize = (*(BYTE*) (0x7c00 + 2));
 	BYTE mainKernelSize = (*(BYTE*) (0x7c00 + 3));
@@ -81,7 +80,7 @@ void _entry() {
 	enableInterrupt();
 	cPrintf("Interrupt enabled.\n");
 
-	//타이머 테스트
+//	//타이머 테스트
 //	cPrintf("Timer Test");
 //	while (g_timerCount < 1000) {
 //		printChar(g_cursorOffset + (g_timerCount / 200), g_consoleAttribute,
@@ -95,6 +94,9 @@ void _entry() {
 
 	//태스크 풀 초기화
 	initTaskPool(TASKPOOL_ADDRESS);
+
+	//HDDInfo asd;
+	//cPrintf("hddinfo size:%d\n", sizeof(asd));
 
 	//셸 실행
 	shellRun();

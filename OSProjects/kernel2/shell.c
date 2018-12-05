@@ -52,7 +52,7 @@ int keyboardBufferHandler(char* commandBuffer, int commandLength) {
 	switch (scancode) {
 	case SCANCODE_BACKSPACE_DOWN: //백스페이스 처리
 		if (commandLength >= 1) {
-			removeCharactor();
+			removeCharacter();
 			commandLength--;
 			commandBuffer[commandLength] = ' ';
 		}
@@ -131,7 +131,7 @@ int showCommandList(const char* args){
 }
 
 int setTextColor(const char* args) {
-	CHARACTOR* vim = (CHARACTOR*) VIDEO_MEM;
+	Character* vim = (Character*) VIDEO_MEM;
 	int i, argLength, loopCount;
 	BYTE color;
 	struct ColorSet {
@@ -297,8 +297,8 @@ void cursorAnimation_sub() {
 	}
 }
 void lineAnimationR_sub(){
-	CHARACTOR* vim = (CHARACTOR*) VIDEO_MEM;
-	CHARACTOR oldLine[VIDEO_HEIGHT];		//이전에 그렸던 선을 지울 때 사용
+	Character* vim = (Character*) VIDEO_MEM;
+	Character oldLine[VIDEO_HEIGHT];		//이전에 그렸던 선을 지울 때 사용
 	int i;
 	int animOffset = 0;
 	int beforeOffset = VIDEO_WIDTH - 1;
@@ -312,7 +312,7 @@ void lineAnimationR_sub(){
 			//이전에 그렸던 선을 지운다.
 			printChar(
 			VIDEO_WIDTH * i + beforeOffset, oldLine[i].attribute,
-					oldLine[i].charactor);
+					oldLine[i].Character);
 			//선을 그리기 전에 이전 정보를 저장해둔다.
 			oldLine[i] = vim[VIDEO_WIDTH * i + animOffset];
 			//선을 그린다.
@@ -325,8 +325,8 @@ void lineAnimationR_sub(){
 	}
 }
 void lineAnimationL_sub() {
-	CHARACTOR* vim = (CHARACTOR*) VIDEO_MEM;
-	CHARACTOR oldLine[VIDEO_HEIGHT];		//이전에 그렸던 선을 지울 때 사용
+	Character* vim = (Character*) VIDEO_MEM;
+	Character oldLine[VIDEO_HEIGHT];		//이전에 그렸던 선을 지울 때 사용
 	int i;
 	int animOffset = VIDEO_WIDTH - 1;
 	int beforeOffset = 0;
@@ -340,7 +340,7 @@ void lineAnimationL_sub() {
 			//이전에 그렸던 선을 지운다.
 			printChar(
 			VIDEO_WIDTH * i + beforeOffset, oldLine[i].attribute,
-					oldLine[i].charactor);
+					oldLine[i].Character);
 			//선을 그리기 전에 이전 정보를 저장해둔다.
 			oldLine[i] = vim[VIDEO_WIDTH * i + animOffset];
 			//선을 그린다.

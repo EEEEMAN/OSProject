@@ -121,7 +121,7 @@ unsigned char installImage(const char* devName, const char* imgName) {
 	struct stat imgStat;
 	char command[1024];
 
-//이미지파일 사이즈 구하기
+	//이미지파일 사이즈 구하기
 	imgDescriptor = open(imgName, O_RDONLY | O_BINARY);
 	stat(imgName, &imgStat);
 	printf("imageFile size is %dByte.\n", imgStat.st_size);

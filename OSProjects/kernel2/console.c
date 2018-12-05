@@ -9,29 +9,29 @@ void initVideoMemory() {
 }
 
 void clearScreen() {
-	CHARACTOR* vim = (CHARACTOR*) VIDEO_MEM;
+	Character* vim = (Character*) VIDEO_MEM;
 	int i;
 
 	g_cursorOffset = 0;
 	for (i = 0; i < VIDEO_SIZE; i++) {
-		vim[i].charactor = ' ';
+		vim[i].Character = ' ';
 		vim[i].attribute = g_consoleAttribute;
 	}
 	setCursor(0);
 }
 
 void printString(int offset, BYTE attribute, const char* buffer) {
-	CHARACTOR* vim = (CHARACTOR*) VIDEO_MEM;
+	Character* vim = (Character*) VIDEO_MEM;
 	int strLength = getStrLen(buffer);
 	int i;
 	for (i = 0; i < strLength; i++) {
-		vim[offset + i].charactor = buffer[i];
+		vim[offset + i].Character = buffer[i];
 		vim[offset + i].attribute = attribute;
 	}
 }
 
 void printStringWhereCursor(BYTE attribute, const char* buffer) {
-	CHARACTOR* vim = (CHARACTOR*) VIDEO_MEM;
+	Character* vim = (Character*) VIDEO_MEM;
 	int strLength = getStrLen(buffer);
 	int i, j;
 
@@ -48,10 +48,10 @@ void printStringWhereCursor(BYTE attribute, const char* buffer) {
 		if (g_cursorOffset + VIDEO_WIDTH >= VIDEO_SIZE) {
 			//한 줄씩 위로 올림
 			memcopy(&(vim[0]), &(vim[VIDEO_WIDTH]),
-					(VIDEO_SIZE - (VIDEO_WIDTH * 2)) * sizeof(CHARACTOR));
+					(VIDEO_SIZE - (VIDEO_WIDTH * 2)) * sizeof(Character));
 			//맨 아래, 아래에서 두번째 줄을 비움
 			for (j = VIDEO_SIZE - (VIDEO_WIDTH * 2); j < VIDEO_SIZE; j++) {
-				vim[j].charactor = ' ';
+				vim[j].Character = ' ';
 				vim[j].attribute = g_consoleAttribute;
 			}
 			//커서를 한 줄 위로 올림
@@ -62,9 +62,9 @@ void printStringWhereCursor(BYTE attribute, const char* buffer) {
 }
 
 void printChar(int offset, BYTE attribute, const char ch) {
-	CHARACTOR* vim = (CHARACTOR*) VIDEO_MEM;
+	Character* vim = (Character*) VIDEO_MEM;
 
-	vim[offset].charactor = ch;
+	vim[offset].Character = ch;
 	vim[offset].attribute = attribute;
 }
 
@@ -89,10 +89,10 @@ void cPrintf(const char* formatString, ...) {
 	printStringWhereCursor(g_consoleAttribute, buffer);
 }
 
-void removeCharactor() {
-	CHARACTOR* vim = (CHARACTOR*) VIDEO_MEM;
+void removeCharacter() {
+	Character* vim = (Character*) VIDEO_MEM;
 	g_cursorOffset--;
-	vim[g_cursorOffset].charactor = ' ';
+	vim[g_cursorOffset].Character = ' ';
 	vim[g_cursorOffset].attribute = g_consoleAttribute;
 	setCursor(g_cursorOffset);
 }
@@ -101,7 +101,7 @@ void bClearScreen(VideoBuffer* buffer, int size) {
 	int i;
 	for (i = 0; i < size; i++) {
 		buffer->buffer[i].attribute = g_consoleAttribute;
-		buffer->buffer[i].charactor = ' ';
+		buffer->buffer[i].Character = ' ';
 	}
 	buffer->cursorOffset = 0;
 }
@@ -112,12 +112,12 @@ void bPrintString(VideoBuffer* buffer, int offset, BYTE attribute,
 	int steLen = getStrLen(str);
 	for (i = offset; i < offset + steLen; i++) {
 		buffer->buffer[i].attribute = attribute;
-		buffer->buffer[i].charactor = str[i - offset];
+		buffer->buffer[i].Character = str[i - offset];
 	}
 }
 
 void bPrintChar(VideoBuffer* buffer, int offset, BYTE attribute, const char ch) {
-	buffer->buffer[offset].charactor = ch;
+	buffer->buffer[offset].Character = ch;
 	buffer->buffer[offset].attribute = attribute;
 }
 
@@ -132,8 +132,8 @@ void bPrintf(VideoBuffer* buffer, BYTE attribute, const char* formatString, ...)
 	bPrintString(buffer, buffer->cursorOffset, attribute, str);
 }
 
-void bRemoveCharactor(VideoBuffer* buffer) {
+void bRemoveCharacter(VideoBuffer* buffer) {
 	buffer->cursorOffset--;
-	buffer->buffer[buffer->cursorOffset].charactor = ' ';
+	buffer->buffer[buffer->cursorOffset].Character = ' ';
 	buffer->buffer[buffer->cursorOffset].attribute = g_consoleAttribute;
 }

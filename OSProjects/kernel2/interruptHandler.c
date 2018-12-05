@@ -5,8 +5,8 @@
 #include "PIC.h"
 #include "PIT.h"
 #include "mString.h"
-#include "Task.h"
 #include "mScheduler.h"
+#include "task.h"
 
 void defaultHandler(BYTE intNum, BYTE errorCode) {
 	cPrintf("Interrupt Occur(%d), ErrorCode:0x%x\n", intNum, errorCode);
@@ -34,7 +34,6 @@ void keyboardHandler() {
 
 void testTimerHandler() {
 	g_timerCount++;
-	g_timerCount2++;
 	sendEOI(0);
 	schedule();
 }

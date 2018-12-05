@@ -12,7 +12,7 @@ build :
 $(BOOTFILE) : makeBootsector sizefix
 	@echo
 	@echo ================make $(BOOTFILE)======================
-	cat bootsector/bootsector.bin kernel1/kernel1.bin kernel2/kernel2.bin > $@
+	cat bootsector/bin/bootsector.bin kernel1/bin/kernel1.bin kernel2/bin/kernel2.bin > $@
 	@echo ================$(BOOTFILE) created====================
 	@echo
 
@@ -47,19 +47,19 @@ makeSizeFixer :
 sizefix : makeKernel1 makeKernel2 makeSizeFixer
 	@echo
 	@echo ================kernel1.bin Size Fix======================
-	util/SizeFixer.exe kernel1/kernel1.bin
+	util/SizeFixer.exe kernel1/bin/kernel1.bin
 	@echo ================kernel1.bin Size Fixed====================
 	@echo
 	@echo
 	@echo ================kernel2.bin Size Fix======================
-	util/SizeFixer.exe kernel2/kernel2.bin
+	util/SizeFixer.exe kernel2/bin/kernel2.bin
 	@echo ================kernel2.bin Size Fixed====================
 	@echo
 	
 sizeCheck : $(BOOTFILE) sizefix
 	@echo
 	@echo ================kernel Size Check======================
-	util/SizeChecker.exe $(BOOTFILE) kernel1/kernel1.bin kernel2/kernel2.bin
+	util/SizeChecker.exe $(BOOTFILE) kernel1/bin/kernel1.bin kernel2/bin/kernel2.bin
 	@echo ================kernel1 Size Checked====================
 	@echo
 

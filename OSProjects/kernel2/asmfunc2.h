@@ -2,10 +2,12 @@
 #define __ASNFUNC_H__
 
 #include "../kernel1/OSDefine.h"
-#include "Task.h"
+#include "task.h"
 
 BYTE in8bits(WORD port);
 void out8bits(WORD port, BYTE data);
+WORD in16bits(WORD port);
+void out16bits(WORD port, WORD data);
 DWORD in32bits(WORD port);
 void out32bits(WORD port, DWORD data);
 

@@ -2,8 +2,8 @@
 #define __MSCHEDULER_H__
 
 #include "../kernel1/OSDefine.h"
-#include "Task.h"
 #include "mList.h"
+#include "task.h"
 
 #define TASK_COUNT_MAX					512
 #define TASK_RUNNINGTIME_MAX			20

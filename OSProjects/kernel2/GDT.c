@@ -1,6 +1,6 @@
 #include "GDT.h"
-#include "Task.h"
 #include "asmfunc2.h"
+#include "task.h"
 
 void setDescriptor(GDescriptor* descriptor, DWORD baseAddress, DWORD limit,
 		BYTE flags1, BYTE flags2){

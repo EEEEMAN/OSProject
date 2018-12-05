@@ -1,6 +1,6 @@
 [bits 32]
 
-global in8bits, out8bits
+global in8bits, out8bits, in16bits, out16bits
 global in32bits, out32bits
 global loadIDT, loadGDT, loadTR
 global enableInterrupt, disableInterrupt, hltCall
@@ -35,6 +35,39 @@ out8bits:
 	xor eax, eax
 	mov eax, dword[ebp + 12]
 	out dx, al
+
+	pop eax
+	pop edx
+	pop ebp
+	ret
+
+;WORD in16bits(WORD port);
+in16bits:
+	push ebp
+	mov ebp, esp
+	push edx
+
+	xor edx, edx
+	mov edx, dword[ebp + 8]
+	xor eax, eax
+	in ax, dx
+
+	pop edx
+	pop ebp
+	ret
+
+;void out16bits(WORD port, WORD data);
+out16bits:
+	push ebp
+	mov ebp, esp
+	push edx
+	push eax
+
+	xor edx, edx
+	mov edx, dword[ebp + 8]
+	xor eax, eax
+	mov eax, dword[ebp + 12]
+	out dx, ax
 
 	pop eax
 	pop edx

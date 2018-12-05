@@ -5,12 +5,12 @@ MAINFILE = kernel.o
 
 COBJECTFILES = $(addprefix bin/, $(subst kernel.o, , $(notdir $(patsubst %.c,%.o,$(wildcard ./*.c)))))
 
-all : dep kernel1.bin
+all : dep bin/kernel1.bin
 
 dep:
 	make -C bin -f ../makefile InternalDependency
 
-kernel1.bin : bin/EntryPoint.bin bin/kernel1_noEntry.bin
+bin/kernel1.bin : bin/entryPoint.bin bin/kernel1_noEntry.bin
 	@echo
 	@echo ================make kernel1.bin=========================
 	cat $^ > $@
@@ -24,11 +24,11 @@ bin/kernel1_noEntry.bin : bin/kernel.elf
 	@echo ================kernel1.bin created======================
 	@echo
 
-bin/EntryPoint.bin : EntryPoint.asm
+bin/entryPoint.bin : entryPoint.asm
 	@echo
-	@echo ================make EntryPoint======================
+	@echo ================make entryPoint======================
 	nasm -o $@ $<
-	@echo ================EntryPoint created======================
+	@echo ================entryPoint created======================
 	@echo
 
 bin/kernel.elf : bin/$(MAINFILE) bin/asmfunc.o $(COBJECTFILES)

@@ -1,9 +1,9 @@
-#include "Task.h"
 #include "utility2.h"
 #include "GDT.h"
 #include "console.h"
 #include "asmfunc2.h"
 #include "mScheduler.h"
+#include "task.h"
 
 void initTSSDescriptors(DWORD GDTAddress, DWORD TSSAddress) {
 	int i;

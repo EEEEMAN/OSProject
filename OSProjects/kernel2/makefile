@@ -6,12 +6,12 @@ MAINFILE = mainKernel.o
 COBJECTFILES = $(addprefix bin/, $(subst kernel.o, , $(notdir $(patsubst %.c,%.o,$(wildcard ./*.c)))))
 ASMOBJECTFILES = $(addprefix bin/, $(notdir $(patsubst %.asm,%.o,$(wildcard ./*.asm))))
 
-all : dep kernel2.bin
+all : dep bin/kernel2.bin
 
 dep:
 	make -C bin -f ../makefile InternalDependency
 
-kernel2.bin : bin/kernel.elf
+bin/kernel2.bin : bin/kernel.elf
 	@echo
 	@echo ================make kernel2.bin=========================
 	$(OBJCOPY) $^ $@
