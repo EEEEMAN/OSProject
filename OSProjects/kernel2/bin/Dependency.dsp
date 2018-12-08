@@ -1,4 +1,6 @@
 GDT.o: ../GDT.c ../GDT.h ../../kernel1/OSDefine.h ../asmfunc2.h ../task.h
+graphics.o: ../graphics.c ../graphics.h ../../kernel1/OSDefine.h \
+ ../asmfunc2.h ../task.h
 utility2.o: ../utility2.c ../utility2.h ../../kernel1/OSDefine.h
 PIC.o: ../PIC.c ../PIC.h ../../kernel1/OSDefine.h ../asmfunc2.h ../task.h
 IDT.o: ../IDT.c ../IDT.h ../../kernel1/OSDefine.h ../ISR.h ../asmfunc2.h \
@@ -29,5 +31,5 @@ HDControllor.o: ../HDControllor.c ../HDControllor.h \
 mainKernel.o: ../mainKernel.c ../console.h ../../kernel1/OSDefine.h \
  ../mainKernel.h ../GDT.h ../IDT.h ../PIC.h ../PIT.h ../asmfunc2.h \
  ../task.h ../keyboardControllor.h ../mString.h ../utility2.h ../shell.h \
- ../mMemory.h ../mList.h ../mScheduler.h ../HDControllor.h
+ ../mMemory.h ../mList.h ../mScheduler.h ../HDControllor.h ../graphics.h
 PIT.o: ../PIT.c ../PIT.h ../../kernel1/OSDefine.h ../asmfunc2.h ../task.h

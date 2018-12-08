@@ -21,6 +21,7 @@ void clearScreen() {
 }
 
 void printString(int offset, BYTE attribute, const char* buffer) {
+
 	Character* vim = (Character*) VIDEO_MEM;
 	int strLength = getStrLen(buffer);
 	int i;
@@ -28,9 +29,11 @@ void printString(int offset, BYTE attribute, const char* buffer) {
 		vim[offset + i].Character = buffer[i];
 		vim[offset + i].attribute = attribute;
 	}
+
 }
 
 void printStringWhereCursor(BYTE attribute, const char* buffer) {
+
 	Character* vim = (Character*) VIDEO_MEM;
 	int strLength = getStrLen(buffer);
 	int i, j;
@@ -59,13 +62,16 @@ void printStringWhereCursor(BYTE attribute, const char* buffer) {
 		}
 	}
 	setCursor(g_cursorOffset);
+
 }
 
 void printChar(int offset, BYTE attribute, const char ch) {
+
 	Character* vim = (Character*) VIDEO_MEM;
 
 	vim[offset].Character = ch;
 	vim[offset].attribute = attribute;
+
 }
 
 void setCursor(int curOffset) {
@@ -79,6 +85,7 @@ void setCursor(int curOffset) {
 }
 
 void cPrintf(const char* formatString, ...) {
+
 	char buffer[MAX_STRING_LENGTH];
 	va_list va;
 
@@ -87,14 +94,17 @@ void cPrintf(const char* formatString, ...) {
 	va_end(va);
 
 	printStringWhereCursor(g_consoleAttribute, buffer);
+
 }
 
 void removeCharacter() {
+
 	Character* vim = (Character*) VIDEO_MEM;
 	g_cursorOffset--;
 	vim[g_cursorOffset].Character = ' ';
 	vim[g_cursorOffset].attribute = g_consoleAttribute;
 	setCursor(g_cursorOffset);
+
 }
 
 void bClearScreen(VideoBuffer* buffer, int size) {

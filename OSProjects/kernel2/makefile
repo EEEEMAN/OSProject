@@ -2,6 +2,7 @@ LD = x86_64-pc-linux-ld.exe -melf_i386 -T k2Linker -nostdlib -Map bin/kernel.map
 GCC = x86_64-pc-linux-gcc.exe -c -m32 -ffreestanding
 OBJCOPY = x86_64-pc-linux-objcopy -j .text -j .data -j .rodata -j .bss -O binary -S
 MAINFILE = mainKernel.o
+CFLAGS = 
 
 COBJECTFILES = $(addprefix bin/, $(subst kernel.o, , $(notdir $(patsubst %.c,%.o,$(wildcard ./*.c)))))
 ASMOBJECTFILES = $(addprefix bin/, $(notdir $(patsubst %.asm,%.o,$(wildcard ./*.asm))))
@@ -26,10 +27,10 @@ bin/kernel.elf : bin/$(MAINFILE) $(COBJECTFILES) $(ASMOBJECTFILES)
 	@echo
 
 InternalDependency:
-	$(GCC) -MM $(wildcard ../*.c) > Dependency.dsp
+	$(GCC) $(CFLAGS) -MM $(wildcard ../*.c) > Dependency.dsp
 	
 bin/%.o : %.c
-	$(GCC) -o $@ $<
+	$(GCC) $(CFLAGS) -o $@ $<
 bin/%.o : %.asm
 	nasm -f elf32 -o $@ $<
 

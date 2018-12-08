@@ -52,23 +52,35 @@ BootCodeStart:
 	call DisplayMessage16
 	;--------------------------------------------------------------
 
-	;;2차 커널 로드-----------------------------------------------------
-	;xor eax, eax
-	;xor ecx, ecx
-	;xor edx, edx
-	;mov al, byte[SUB_KERNEL_SIZE]			;LBA번호
-	;inc al
-	;mov si, ax
-	;mov ax, 0x3000							;0x3000:0x0000에 저장
-	;mov cx, 0x0000
-	;mov dl, byte[MAIN_KERNEL_SIZE]			;읽을 섹터 수
-	;call ReadSector
-	;
-	;mov	si, msgKernel2LoadComp
-	;call DisplayMessage16
-	;;--------------------------------------------------------------
+	mov byte[0x8fff], 0x00
+;GUI모드로 전환--------------------------------------------------------
+	mov ax, 0x4F01
+	mov cx, 0x117
+	mov bx, 0x00
+	mov es, bx
+	mov di, 0x8E00
+	int 0x10
+	cmp ax, 0x004F
+	jne ErrorMessage
 
+	cmp byte[flagGUIMode], 0x00
+	je JumpToKernel
+
+	mov ax, 0x4F02
+	mov bx, 0x4117
+	int 0x10
+	cmp ax, 0x004F
+	jne ErrorMessage
+
+	mov byte[0x8fff], 0x01
+;--------------------------------------------------------------------
+JumpToKernel:
 	jmp 0x8000
+	hlt
+
+ErrorMessage:
+	mov si, msgErr
+	call DisplayMessage16
 	hlt
 
 DisplayMessage16: ; si:메시지
@@ -108,11 +120,7 @@ ReadSector: ;섹터 읽기. si : 읽을 섹터 LBA 번호, ax:cx : 저장할 메
 	mov si, ax
 	mov ah, 0x42
 	int 0x13
-	jnc ReadComp
-	mov si, msgErr
-	call DisplayMessage16
-	hlt
-ReadComp:
+	jc ErrorMessage
 	ret
 
 ActiveA20Gate:
@@ -131,6 +139,7 @@ msgRegisterInitComp		db "Register initialize complete...", 0x00
 msgKernel1LoadComp		db "subKernel load Complete...", 0x00
 msgKernel2LoadComp		db "mainKernel load Complete...", 0x00
 msgErr					db	"Error...", 0x00
+flagGUIMode				db				0x01
 
 times 446 - ($ - $$) db 0
 

@@ -14,6 +14,7 @@
 #include "mScheduler.h"
 #include "task.h"
 #include "HDControllor.h"
+#include "graphics.h"
 
 void _entry() {
 	//모니터화면 초기화
@@ -95,9 +96,18 @@ void _entry() {
 	//태스크 풀 초기화
 	initTaskPool(TASKPOOL_ADDRESS);
 
-	//HDDInfo asd;
-	//cPrintf("hddinfo size:%d\n", sizeof(asd));
+	cPrintf("colorSize:%d\n", sizeof(VBE16BitsColor));
 
 	//셸 실행
-	shellRun();
+	if (*((BYTE*)0x8FFF) == 0x00){
+		shellRun();
+	}else if (*((BYTE*)0x8FFF) == 0x01){
+		VBEInfo* vbeInfo = (VBEInfo*)0x8E00;
+		initGraphicsPalette();
+		VBE16BitsColor col;
+		col.R = 31;
+		drawPixel(500, 300, col);
+	}
+
+	while(1);
 }

@@ -1,4 +1,14 @@
+include config
+
 BOOTFILE = boot.img
+
+ifeq ($(GUIMODE), y)
+	CFLAGS := -DDEBUGMODE
+	ASMFLAGS := -dDEBUGMODE
+else
+	CFLAGS :=
+	ASMFLAGS :=
+endif
 
 all : build
 
@@ -19,7 +29,7 @@ $(BOOTFILE) : makeBootsector sizefix
 makeBootsector : 
 	@echo
 	@echo ================make bootsector======================
-	make -C bootsector
+	make -C bootsector ASMFLAGS=$(ASMFLAGS)
 	@echo ================bootsector created====================
 	@echo
 	
@@ -33,7 +43,7 @@ makeKernel1 :
 makeKernel2 :
 	@echo
 	@echo ================make kernel2======================
-	make -C kernel2
+	make -C kernel2 CFLAGS=$(CFLAGS)
 	@echo ================kernel2 created====================
 	@echo
 	

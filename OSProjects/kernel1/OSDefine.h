@@ -21,6 +21,8 @@
 #define VIDEO_HEIGHT				25
 #define VIDEO_SIZE					(VIDEO_WIDTH * VIDEO_HEIGHT)
 
+#define VBE_INFO_ADDRESS			0x8E00
+
 /////////////////////구조체 정의////////////////////////////////////
 #pragma pack(push, 1)
 
