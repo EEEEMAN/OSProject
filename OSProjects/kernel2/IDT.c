@@ -32,14 +32,6 @@ void initIDT(DWORD address) {
 	setIDTDescriptor(&(ptIdt[19]), isrSIMDError, 0x08, IDT_FLAGS_DEFAULT);
 	setIDTDescriptor(&(ptIdt[20]), isrVirtualizationError, 0x08,
 			IDT_FLAGS_DEFAULT);
-
-//	for (i = 21; i < 30; i++) {
-//		ptIdt[i].offset1 = ((DWORD) funcAddress & 0xFFFF);
-//		ptIdt[i].codeSegmentSelector = 0x08;
-//		ptIdt[i].none = 0;
-//		ptIdt[i].flags = IDT_FLAGS_DEFAULT;
-//		ptIdt[i].offset2 = ((DWORD) funcAddress >> 16);
-//	}
 	setIDTDescriptor(&(ptIdt[21]), isrControlProtectionException, 0x08, IDT_FLAGS_DEFAULT);
 	setIDTDescriptor(&(ptIdt[22]), isrDefault22, 0x08, IDT_FLAGS_DEFAULT);
 	setIDTDescriptor(&(ptIdt[23]), isrDefault23, 0x08, IDT_FLAGS_DEFAULT);

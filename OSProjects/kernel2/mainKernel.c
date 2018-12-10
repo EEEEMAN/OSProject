@@ -96,7 +96,13 @@ void _entry() {
 	//태스크 풀 초기화
 	initTaskPool(TASKPOOL_ADDRESS);
 
-	cPrintf("colorSize:%d\n", sizeof(VBE16BitsColor));
+	if (mouseEnable() == TRUE){
+		cPrintf("mouse enabled\n");
+		mouseInterruptEnable();
+	}
+
+	cPrintf("MasterIMR:0x%x\n", getIMR(TRUE));
+	cPrintf("SlaveIMR:0x%x\n", getIMR(FALSE));
 
 	//셸 실행
 	if (*((BYTE*)0x8FFF) == 0x00){

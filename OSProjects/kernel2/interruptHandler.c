@@ -17,7 +17,7 @@ void UnknownHandler() {
 	cPrintf("Unknown Exception.\n");
 	hltCall();
 }
-int curt = 3;
+
 void keyboardHandler() {
 	BYTE scancode;
 	scancode = readKBCBuffer();

@@ -3,6 +3,7 @@
 
 void initPIC(){
 	//maskPIC(0xFd); //타이머, 키보드빼고는 마스크
+	WORD mask;
 
 	//마스터 PIC를 초기화
 	out8bits(PIC_PORT_MASTER1, ICW1);
@@ -16,14 +17,29 @@ void initPIC(){
 	out8bits(PIC_PORT_SLAVE2, ICW3_SLAVE);
 	out8bits(PIC_PORT_SLAVE2, ICW4);
 
-	//타이머, 키보드빼고는 마스크
-	out8bits(PIC_PORT_SLAVE2, PIC_IMR_MASK_IRQ_ALL);
-	out8bits(PIC_PORT_MASTER2, (~PIC_IMR_MASK_IRQ0 & ~PIC_IMR_MASK_IRQ1 & ~PIC_IMR_MASK_IRQ2));
+	//타이머, 키보드, 슬레이브PIC빼고는 마스크
+	mask = 0;
+	mask |= PIC_IMR_MASK_IRQ0;
+	mask |= PIC_IMR_MASK_IRQ1;
+	mask |= PIC_IMR_MASK_IRQ2;
+	mask |= PIC_IMR_MASK_IRQ12;
+	mask = ~mask;
+	maskPIC(mask);
 }
 
 void maskPIC(WORD mask){
-	out8bits(PIC_PORT_MASTER2, mask & 0xffff);
-	out8bits(PIC_PORT_SLAVE2, mask >> 8);
+	out8bits(PIC_PORT_MASTER2, (BYTE)mask);
+	out8bits(PIC_PORT_SLAVE2, (BYTE)(mask >> 8));
+}
+
+BYTE getIMR(BOOL isMaster){
+	BYTE mask;
+	if (isMaster == TRUE){
+		mask = in8bits(PIC_PORT_MASTER2);
+	}else{
+		mask = in8bits(PIC_PORT_SLAVE2);
+	}
+	return mask;
 }
 
 void sendEOI(int IRQNum){

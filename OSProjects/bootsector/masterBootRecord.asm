@@ -139,7 +139,7 @@ msgRegisterInitComp		db "Register initialize complete...", 0x00
 msgKernel1LoadComp		db "subKernel load Complete...", 0x00
 msgKernel2LoadComp		db "mainKernel load Complete...", 0x00
 msgErr					db	"Error...", 0x00
-flagGUIMode				db				0x01
+flagGUIMode				db				0x00
 
 times 446 - ($ - $$) db 0
 

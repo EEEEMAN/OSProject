@@ -60,192 +60,195 @@ Linker script and memory map
                 [!provide]                        PROVIDE (__executable_start, SEGMENT_START ("text-segment", 0x8048000))
                 0x0000000008048074                . = (SEGMENT_START ("text-segment", 0x8048000) + SIZEOF_HEADERS)
 
-.text           0x0000000000600000     0x3c40
+.text           0x0000000000600000     0x3da0
  *(.text .stub .text.* .gnu.linkonce.t.*)
- .text          0x0000000000600000      0x228 bin/mainKernel.o
+ .text          0x0000000000600000      0x276 bin/mainKernel.o
                 0x0000000000600000                _entry
- .text          0x0000000000600228       0xd2 bin/GDT.o
-                0x0000000000600228                setDescriptor
-                0x000000000060028b                initGDT
- .text          0x00000000006002fa       0xc4 bin/graphics.o
-                0x00000000006002fa                initGraphicsPalette
-                0x0000000000600381                drawPixel
- .text          0x00000000006003be       0xcb bin/utility2.o
-                0x00000000006003be                memcopy
-                0x00000000006003f3                memSet
-                0x0000000000600425                memCmp
- .text          0x0000000000600489      0x125 bin/PIC.o
-                0x0000000000600489                initPIC
-                0x000000000060053d                maskPIC
-                0x000000000060057e                sendEOI
- .text          0x00000000006005ae      0x4a5 bin/IDT.o
-                0x00000000006005ae                initIDT
-                0x0000000000600a07                setIDTDescriptor
- .text          0x0000000000600a53      0x300 bin/keyboardControllor.o
-                0x0000000000600a53                isOutBufferFull
-                0x0000000000600a82                isInBufferFull
-                0x0000000000600ab1                activeKBC
-                0x0000000000600ac9                activeKeyboard
-                0x0000000000600b24                clearKBCBuffer
-                0x0000000000600b3d                writeKBCCommand
-                0x0000000000600b88                readKBCStatus
-                0x0000000000600b9d                writeKBCBuffer
-                0x0000000000600be8                readKBCBuffer
-                0x0000000000600bfd                KBCechoTest
-                0x0000000000600c3c                waitKBCOutBufferFull
-                0x0000000000600c6f                convertScanCodeToASCIICode
-                0x0000000000600caf                waitACK
-                0x0000000000600cfa                getScancodeType
- .text          0x0000000000600d53      0xd1e bin/shell.o
-                0x0000000000600d53                shellRun
-                0x0000000000600dd6                keyboardBufferHandler
-                0x0000000000600f7d                CommandCompareAndExcute
-                0x000000000060102f                showCommandList
-                0x000000000060107c                setTextColor
-                0x0000000000601293                clear
-                0x00000000006012a5                pciDevice
-                0x0000000000601341                showEFLAGS
-                0x0000000000601364                showCR0
-                0x0000000000601387                showMemory
-                0x00000000006013e6                showTask
-                0x0000000000601473                killTask
-                0x000000000060152c                showTimer_sub
-                0x0000000000601585                showTimer
-                0x00000000006015b8                cursorAnimation_sub
-                0x000000000060162d                lineAnimationR_sub
-                0x0000000000601796                lineAnimationL_sub
-                0x00000000006018ff                animationTest
- .text          0x0000000000601a71      0x3ac bin/mMemory.o
-                0x0000000000601a71                checkMemory
-                0x0000000000601b2e                initMemoryManager
-                0x0000000000601b6d                mMalloc
-                0x0000000000601c3f                mFree
- .text          0x0000000000601e1d      0x3be bin/mScheduler.o
-                0x0000000000601e1d                setEnableScheduler
-                0x0000000000601e42                initTaskPool
-                0x0000000000601ef2                schedule
-                0x000000000060200b                createTask
-                0x00000000006020ff                deleteTask
- .text          0x00000000006021db      0x3f2 bin/mString.o
-                0x00000000006021db                getStrLen
-                0x0000000000602203                makeStrByVaList
-                0x0000000000602344                itoa
-                0x0000000000602422                itoa16
-                0x00000000006024b6                mAtoi
-                0x000000000060252f                reverseStr
-                0x00000000006025a9                csPrintf
- .text          0x00000000006025cd      0x51d bin/console.o
-                0x00000000006025cd                initVideoMemory
-                0x00000000006025e2                clearScreen
-                0x0000000000602642                printString
-                0x00000000006026b2                printStringWhereCursor
-                0x000000000060282a                printChar
-                0x0000000000602869                setCursor
-                0x00000000006028cf                cPrintf
-                0x000000000060291d                removeCharacter
-                0x0000000000602972                bClearScreen
-                0x00000000006029b8                bPrintString
-                0x0000000000602a1a                bPrintChar
-                0x0000000000602a4a                bPrintf
-                0x0000000000602aa8                bRemoveCharacter
- .text          0x0000000000602aea       0xfb bin/interruptHandler.o
-                0x0000000000602aea                defaultHandler
-                0x0000000000602b1e                UnknownHandler
-                0x0000000000602b3c                keyboardHandler
-                0x0000000000602bbd                testTimerHandler
- .text          0x0000000000602be5      0x3ba bin/mList.o
-                0x0000000000602be5                initList
-                0x0000000000602c08                insertItemBack
-                0x0000000000602c7e                deleteItemFront
-                0x0000000000602d25                deleteItemBack
-                0x0000000000602e01                popItem
-                0x0000000000602e26                removeItem
-                0x0000000000602ee9                searchItem
-                0x0000000000602f4a                getItem
- .text          0x0000000000602f9f       0x65 bin/PCI.o
-                0x0000000000602f9f                getPCICSData
- .text          0x0000000000603004      0x18d bin/task.o
-                0x0000000000603004                initTSSDescriptors
-                0x0000000000603082                initTSS
- .text          0x0000000000603191       0xad bin/HDControllor.o
-                0x0000000000603191                readHDDInfo
-                0x00000000006031e7                changeHDDInterruptStatus
- .text          0x000000000060323e       0xda bin/PIT.o
-                0x000000000060323e                initPIT
-                0x00000000006032b0                mSleep
- *fill*         0x0000000000603318        0x8 90909090
- .text          0x0000000000603320      0x16a bin/asmfunc2.o
-                0x0000000000603320                in8bits
-                0x000000000060332f                out8bits
-                0x0000000000603343                in16bits
-                0x0000000000603353                out16bits
-                0x0000000000603368                in32bits
-                0x0000000000603377                out32bits
-                0x000000000060338b                loadIDT
-                0x00000000006033b3                enableInterrupt
-                0x00000000006033b5                disableInterrupt
-                0x00000000006033b7                hltCall
-                0x00000000006033b9                loadGDT
-                0x00000000006033f8                loadTR
-                0x0000000000603405                taskswitch
-                0x000000000060340a                getEFLAGS
-                0x000000000060340d                setEFLAGS
-                0x0000000000603419                getCR0Register
-                0x000000000060341d                setCR0Register
-                0x000000000060342a                getInterruptStatus
-                0x0000000000603431                setInterruptStatus
-                0x0000000000603445                memoryTest
- *fill*         0x000000000060348a        0x6 90909090
- .text          0x0000000000603490      0x7b0 bin/ISR.o
-                0x0000000000603490                isrDivideZero
-                0x00000000006034c7                isrDebugMode
-                0x00000000006034fe                isrNMI
-                0x0000000000603535                isrINT3
-                0x000000000060356c                isrOverflow
-                0x00000000006035a3                isrOverAddress
-                0x00000000006035da                isrNonExistCommand
-                0x0000000000603611                isrNonExistDevice
-                0x0000000000603648                isrContinuousException
-                0x0000000000603687                isrCoprocessorError
-                0x00000000006036be                isrTSSError
-                0x00000000006036fd                isrOverSegment
-                0x000000000060373c                isrStackSegmentError
-                0x000000000060377b                isrViolidProtectRule
-                0x00000000006037ba                isrPageFault
-                0x00000000006037f9                isrNonDefiled
-                0x0000000000603830                isrFloatingError
-                0x0000000000603867                isrAligndError
-                0x00000000006038a6                isrMachineCheckError
-                0x00000000006038dd                isrSIMDError
-                0x0000000000603914                isrVirtualizationError
-                0x000000000060394b                isrControlProtectionException
-                0x0000000000603982                isrDefault22
-                0x00000000006039b9                isrDefault23
-                0x00000000006039f0                isrDefault24
-                0x0000000000603a27                isrDefault25
-                0x0000000000603a5e                isrDefault26
-                0x0000000000603a95                isrDefault27
-                0x0000000000603acc                isrDefault28
-                0x0000000000603b03                isrDefault29
-                0x0000000000603b3a                isrDefault31
-                0x0000000000603b71                isrSecurityError
-                0x0000000000603bb0                isrTimerInterrupt
-                0x0000000000603be0                isrKeyboardInterrupt
-                0x0000000000603c10                isrDefault
+ .text          0x0000000000600276       0xd2 bin/GDT.o
+                0x0000000000600276                setDescriptor
+                0x00000000006002d9                initGDT
+ .text          0x0000000000600348       0xc4 bin/graphics.o
+                0x0000000000600348                initGraphicsPalette
+                0x00000000006003cf                drawPixel
+ .text          0x000000000060040c       0xcb bin/utility2.o
+                0x000000000060040c                memcopy
+                0x0000000000600441                memSet
+                0x0000000000600473                memCmp
+ .text          0x00000000006004d7      0x16a bin/PIC.o
+                0x00000000006004d7                initPIC
+                0x0000000000600593                maskPIC
+                0x00000000006005d4                getIMR
+                0x0000000000600611                sendEOI
+ .text          0x0000000000600641      0x4a5 bin/IDT.o
+                0x0000000000600641                initIDT
+                0x0000000000600a9a                setIDTDescriptor
+ .text          0x0000000000600ae6      0x3c7 bin/keyboardControllor.o
+                0x0000000000600ae6                isOutBufferFull
+                0x0000000000600b15                isInBufferFull
+                0x0000000000600b44                activeKBC
+                0x0000000000600b5c                activeKeyboard
+                0x0000000000600bb7                clearKBCBuffer
+                0x0000000000600bd0                writeKBCCommand
+                0x0000000000600c1b                readKBCStatus
+                0x0000000000600c30                writeKBCBuffer
+                0x0000000000600c7b                readKBCBuffer
+                0x0000000000600c90                KBCechoTest
+                0x0000000000600ccf                waitKBCOutBufferFull
+                0x0000000000600d02                convertScanCodeToASCIICode
+                0x0000000000600d42                waitACK
+                0x0000000000600d8d                getScancodeType
+                0x0000000000600de6                mouseEnable
+                0x0000000000600e69                mouseInterruptEnable
+ .text          0x0000000000600ead      0xd1e bin/shell.o
+                0x0000000000600ead                shellRun
+                0x0000000000600f30                keyboardBufferHandler
+                0x00000000006010d7                CommandCompareAndExcute
+                0x0000000000601189                showCommandList
+                0x00000000006011d6                setTextColor
+                0x00000000006013ed                clear
+                0x00000000006013ff                pciDevice
+                0x000000000060149b                showEFLAGS
+                0x00000000006014be                showCR0
+                0x00000000006014e1                showMemory
+                0x0000000000601540                showTask
+                0x00000000006015cd                killTask
+                0x0000000000601686                showTimer_sub
+                0x00000000006016df                showTimer
+                0x0000000000601712                cursorAnimation_sub
+                0x0000000000601787                lineAnimationR_sub
+                0x00000000006018f0                lineAnimationL_sub
+                0x0000000000601a59                animationTest
+ .text          0x0000000000601bcb      0x3ac bin/mMemory.o
+                0x0000000000601bcb                checkMemory
+                0x0000000000601c88                initMemoryManager
+                0x0000000000601cc7                mMalloc
+                0x0000000000601d99                mFree
+ .text          0x0000000000601f77      0x3be bin/mScheduler.o
+                0x0000000000601f77                setEnableScheduler
+                0x0000000000601f9c                initTaskPool
+                0x000000000060204c                schedule
+                0x0000000000602165                createTask
+                0x0000000000602259                deleteTask
+ .text          0x0000000000602335      0x3f2 bin/mString.o
+                0x0000000000602335                getStrLen
+                0x000000000060235d                makeStrByVaList
+                0x000000000060249e                itoa
+                0x000000000060257c                itoa16
+                0x0000000000602610                mAtoi
+                0x0000000000602689                reverseStr
+                0x0000000000602703                csPrintf
+ .text          0x0000000000602727      0x51d bin/console.o
+                0x0000000000602727                initVideoMemory
+                0x000000000060273c                clearScreen
+                0x000000000060279c                printString
+                0x000000000060280c                printStringWhereCursor
+                0x0000000000602984                printChar
+                0x00000000006029c3                setCursor
+                0x0000000000602a29                cPrintf
+                0x0000000000602a77                removeCharacter
+                0x0000000000602acc                bClearScreen
+                0x0000000000602b12                bPrintString
+                0x0000000000602b74                bPrintChar
+                0x0000000000602ba4                bPrintf
+                0x0000000000602c02                bRemoveCharacter
+ .text          0x0000000000602c44       0xfb bin/interruptHandler.o
+                0x0000000000602c44                defaultHandler
+                0x0000000000602c78                UnknownHandler
+                0x0000000000602c96                keyboardHandler
+                0x0000000000602d17                testTimerHandler
+ .text          0x0000000000602d3f      0x3ba bin/mList.o
+                0x0000000000602d3f                initList
+                0x0000000000602d62                insertItemBack
+                0x0000000000602dd8                deleteItemFront
+                0x0000000000602e7f                deleteItemBack
+                0x0000000000602f5b                popItem
+                0x0000000000602f80                removeItem
+                0x0000000000603043                searchItem
+                0x00000000006030a4                getItem
+ .text          0x00000000006030f9       0x65 bin/PCI.o
+                0x00000000006030f9                getPCICSData
+ .text          0x000000000060315e      0x18d bin/task.o
+                0x000000000060315e                initTSSDescriptors
+                0x00000000006031dc                initTSS
+ .text          0x00000000006032eb       0xad bin/HDControllor.o
+                0x00000000006032eb                readHDDInfo
+                0x0000000000603341                changeHDDInterruptStatus
+ .text          0x0000000000603398       0xda bin/PIT.o
+                0x0000000000603398                initPIT
+                0x000000000060340a                mSleep
+ *fill*         0x0000000000603472        0xe 90909090
+ .text          0x0000000000603480      0x16a bin/asmfunc2.o
+                0x0000000000603480                in8bits
+                0x000000000060348f                out8bits
+                0x00000000006034a3                in16bits
+                0x00000000006034b3                out16bits
+                0x00000000006034c8                in32bits
+                0x00000000006034d7                out32bits
+                0x00000000006034eb                loadIDT
+                0x0000000000603513                enableInterrupt
+                0x0000000000603515                disableInterrupt
+                0x0000000000603517                hltCall
+                0x0000000000603519                loadGDT
+                0x0000000000603558                loadTR
+                0x0000000000603565                taskswitch
+                0x000000000060356a                getEFLAGS
+                0x000000000060356d                setEFLAGS
+                0x0000000000603579                getCR0Register
+                0x000000000060357d                setCR0Register
+                0x000000000060358a                getInterruptStatus
+                0x0000000000603591                setInterruptStatus
+                0x00000000006035a5                memoryTest
+ *fill*         0x00000000006035ea        0x6 90909090
+ .text          0x00000000006035f0      0x7b0 bin/ISR.o
+                0x00000000006035f0                isrDivideZero
+                0x0000000000603627                isrDebugMode
+                0x000000000060365e                isrNMI
+                0x0000000000603695                isrINT3
+                0x00000000006036cc                isrOverflow
+                0x0000000000603703                isrOverAddress
+                0x000000000060373a                isrNonExistCommand
+                0x0000000000603771                isrNonExistDevice
+                0x00000000006037a8                isrContinuousException
+                0x00000000006037e7                isrCoprocessorError
+                0x000000000060381e                isrTSSError
+                0x000000000060385d                isrOverSegment
+                0x000000000060389c                isrStackSegmentError
+                0x00000000006038db                isrViolidProtectRule
+                0x000000000060391a                isrPageFault
+                0x0000000000603959                isrNonDefiled
+                0x0000000000603990                isrFloatingError
+                0x00000000006039c7                isrAligndError
+                0x0000000000603a06                isrMachineCheckError
+                0x0000000000603a3d                isrSIMDError
+                0x0000000000603a74                isrVirtualizationError
+                0x0000000000603aab                isrControlProtectionException
+                0x0000000000603ae2                isrDefault22
+                0x0000000000603b19                isrDefault23
+                0x0000000000603b50                isrDefault24
+                0x0000000000603b87                isrDefault25
+                0x0000000000603bbe                isrDefault26
+                0x0000000000603bf5                isrDefault27
+                0x0000000000603c2c                isrDefault28
+                0x0000000000603c63                isrDefault29
+                0x0000000000603c9a                isrDefault31
+                0x0000000000603cd1                isrSecurityError
+                0x0000000000603d10                isrTimerInterrupt
+                0x0000000000603d40                isrKeyboardInterrupt
+                0x0000000000603d70                isrDefault
  *(.gnu.warning)
 
-.rodata         0x0000000000603c40      0x3ed
+.rodata         0x0000000000603da0      0x40d
  *(.rodata .rodata.* .gnu.linkonce.r.*)
- .rodata        0x0000000000603c40      0x179 bin/mainKernel.o
- .rodata        0x0000000000603db9      0x222 bin/shell.o
- *fill*         0x0000000000603fdb        0x1 
- .rodata        0x0000000000603fdc       0x51 bin/interruptHandler.o
+ .rodata        0x0000000000603da0      0x199 bin/mainKernel.o
+ .rodata        0x0000000000603f39      0x222 bin/shell.o
+ *fill*         0x000000000060415b        0x1 
+ .rodata        0x000000000060415c       0x51 bin/interruptHandler.o
 
 .rodata1
  *(.rodata1)
                 0x0000000000604200                . = ALIGN (0x200)
 
-.data           0x0000000000604200      0x358
+.data           0x0000000000604200      0x352
  *(.data .data.* .gnu.linkonce.d.*)
  .data          0x0000000000604200       0xb2 bin/mainKernel.o
  .data          0x00000000006042b2        0x0 bin/GDT.o
@@ -263,17 +266,16 @@ Linker script and memory map
  .data          0x0000000000604498        0x0 bin/mString.o
  .data          0x0000000000604498        0x0 bin/console.o
  *fill*         0x0000000000604498        0x8 
- .data          0x00000000006044a0       0xb8 bin/interruptHandler.o
-                0x0000000000604554                curt
- .data          0x0000000000604558        0x0 bin/mList.o
- .data          0x0000000000604558        0x0 bin/PCI.o
- .data          0x0000000000604558        0x0 bin/task.o
- .data          0x0000000000604558        0x0 bin/HDControllor.o
- .data          0x0000000000604558        0x0 bin/PIT.o
+ .data          0x00000000006044a0       0xb2 bin/interruptHandler.o
+ .data          0x0000000000604552        0x0 bin/mList.o
+ .data          0x0000000000604552        0x0 bin/PCI.o
+ .data          0x0000000000604552        0x0 bin/task.o
+ .data          0x0000000000604552        0x0 bin/HDControllor.o
+ .data          0x0000000000604552        0x0 bin/PIT.o
 
 .data1
  *(.data1)
-                0x0000000000604558                __bss_start = .
+                0x0000000000604552                __bss_start = .
 
 .bss            0x0000000000604560     0x2014
  *(.dynbss)
@@ -413,7 +415,7 @@ Linker script and memory map
  *(.eh_frame_hdr)
  *(.eh_frame_entry .eh_frame_entry.*)
 
-.eh_frame       0x0000000000606574      0xba4
+.eh_frame       0x0000000000606574      0xc04
  *(.eh_frame)
  .eh_frame      0x0000000000606574       0x34 bin/mainKernel.o
  .eh_frame      0x00000000006065a8       0x40 bin/GDT.o
@@ -422,33 +424,33 @@ Linker script and memory map
                                          0x58 (size before relaxing)
  .eh_frame      0x0000000000606628       0x60 bin/utility2.o
                                          0x78 (size before relaxing)
- .eh_frame      0x0000000000606688       0x60 bin/PIC.o
-                                         0x78 (size before relaxing)
- .eh_frame      0x00000000006066e8       0x40 bin/IDT.o
+ .eh_frame      0x0000000000606688       0x80 bin/PIC.o
+                                         0x98 (size before relaxing)
+ .eh_frame      0x0000000000606708       0x40 bin/IDT.o
                                          0x58 (size before relaxing)
- .eh_frame      0x0000000000606728      0x1c0 bin/keyboardControllor.o
-                                        0x1d8 (size before relaxing)
- .eh_frame      0x00000000006068e8      0x22c bin/shell.o
+ .eh_frame      0x0000000000606748      0x200 bin/keyboardControllor.o
+                                        0x218 (size before relaxing)
+ .eh_frame      0x0000000000606948      0x22c bin/shell.o
                                         0x244 (size before relaxing)
- .eh_frame      0x0000000000606b14       0x80 bin/mMemory.o
+ .eh_frame      0x0000000000606b74       0x80 bin/mMemory.o
                                          0x98 (size before relaxing)
- .eh_frame      0x0000000000606b94       0xa0 bin/mScheduler.o
+ .eh_frame      0x0000000000606bf4       0xa0 bin/mScheduler.o
                                          0xb8 (size before relaxing)
- .eh_frame      0x0000000000606c34       0xe4 bin/mString.o
+ .eh_frame      0x0000000000606c94       0xe4 bin/mString.o
                                          0xfc (size before relaxing)
- .eh_frame      0x0000000000606d18      0x1a0 bin/console.o
+ .eh_frame      0x0000000000606d78      0x1a0 bin/console.o
                                         0x1b8 (size before relaxing)
- .eh_frame      0x0000000000606eb8       0x80 bin/interruptHandler.o
+ .eh_frame      0x0000000000606f18       0x80 bin/interruptHandler.o
                                          0x98 (size before relaxing)
- .eh_frame      0x0000000000606f38      0x100 bin/mList.o
+ .eh_frame      0x0000000000606f98      0x100 bin/mList.o
                                         0x118 (size before relaxing)
- .eh_frame      0x0000000000607038       0x20 bin/PCI.o
+ .eh_frame      0x0000000000607098       0x20 bin/PCI.o
                                          0x38 (size before relaxing)
- .eh_frame      0x0000000000607058       0x40 bin/task.o
+ .eh_frame      0x00000000006070b8       0x40 bin/task.o
                                          0x58 (size before relaxing)
- .eh_frame      0x0000000000607098       0x40 bin/HDControllor.o
+ .eh_frame      0x00000000006070f8       0x40 bin/HDControllor.o
                                          0x58 (size before relaxing)
- .eh_frame      0x00000000006070d8       0x40 bin/PIT.o
+ .eh_frame      0x0000000000607138       0x40 bin/PIT.o
                                          0x58 (size before relaxing)
  *(.eh_frame.*)
 
