@@ -1,4 +1,5 @@
 #include "mouseControllor.h"
+#include "asmfunc2.h"
 
 BOOL mouseEnable(){
 	BOOL intStat = getInterruptStatus();

@@ -15,6 +15,7 @@
 #include "task.h"
 #include "HDControllor.h"
 #include "graphics.h"
+#include "mouseControllor.h"
 
 void _entry() {
 	//모니터화면 초기화
