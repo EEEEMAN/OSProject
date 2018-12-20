@@ -20,9 +20,6 @@ BootCodeStart:
 	mov ss, ax
 	mov sp, 0x7bfe
 
-	mov si, msgRegisterInitComp
-	call DisplayMessage16
-
 	call ActiveA20Gate
 
 	;1차 커널 로드----------------------------------------------------
@@ -135,11 +132,10 @@ _A20FAIL:
 _A20SUCCESS:
 	ret
 
-msgRegisterInitComp		db "Register initialize complete...", 0x00
 msgKernel1LoadComp		db "subKernel load Complete...", 0x00
 msgKernel2LoadComp		db "mainKernel load Complete...", 0x00
 msgErr					db	"Error...", 0x00
-flagGUIMode				db				0x00
+flagGUIMode				db				0x01
 
 times 446 - ($ - $$) db 0
 

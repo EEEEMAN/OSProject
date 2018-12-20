@@ -3,6 +3,11 @@
 
 #include "../kernel1/OSDefine.h"
 
+#define MOUSE_CURSOR_WIDTH									20
+#define MOUSE_CURSOR_HEIGHT									20
+
+#define GRAPHICS_DEFAULT_BACKGROUND_COLOR					0x003F10
+
 #pragma pack(push, 1)
 typedef struct _VBEInfo{
 	WORD modeAttr;			//모드의 속성
@@ -62,9 +67,45 @@ typedef struct _VBE16BitsColor{
 	unsigned char G : 6; //0~63
 	unsigned char R : 5; //0~31
 }VBE16BitsColor;
+
+struct _GraphicsManager{
+	VBE16BitsColor backGroundColor;
+	WORD mousePosX;
+	WORD mousePosY;
+	BYTE mouseCenterX;		//0 ~ MOUSE_CURSOR_WIDTH
+	BYTE mouseCenterY;		//0 ~ MOUSE_CURSOR_HEIGHT
+}g_GraphicsManager;
 #pragma pack(pop)
 
 void initGraphicsPalette();
 void drawPixel(int x, int y, VBE16BitsColor color);
+void drawPixelwithColorCode(int x, int y, DWORD colorCode); //code:RRGGBB(0~1F, 0~3F, 0~1F)
+void convertColorCode(DWORD colorCode, VBE16BitsColor* result);
+void drawMouseCursor();
+void drawFillRect(int x, int y, int width, int height, VBE16BitsColor color);
+void drawFillRectwithColorCode(int x, int y, int width, int height, DWORD colorCode);
+
+static BYTE g_MouseCursorImage[MOUSE_CURSOR_WIDTH * MOUSE_CURSOR_HEIGHT] = {
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+};
 
 #endif /*__GRAPHICS_H__*/

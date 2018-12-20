@@ -1,5 +1,7 @@
 #include "keyboardControllor.h"
 #include "asmfunc2.h"
+#include "mouseControllor.h"
+#include "console.h"
 
 BOOL isOutBufferFull() {
 	BYTE statusRegister;
@@ -109,13 +111,12 @@ BYTE convertScanCodeToASCIICode(BYTE scanCode) {
 BOOL waitACK() {
 	int i, j;
 	for (i = 0; i < 100; i++) {
-		if (waitKBCOutBufferFull() == TRUE) {
-			BYTE k = readKBCBuffer();
-			if (k == 0xFA) {
-				return 1;
-			} else if (k == 0xFE) {
-				return 0;
-			}
+		waitKBCOutBufferFull();
+		BYTE k = readKBCBuffer();
+		if (k == 0xFA) {
+			return TRUE;
+		}else if (k == 0xFE){
+			return FALSE;
 		}
 	}
 	return FALSE;

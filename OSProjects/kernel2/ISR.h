@@ -36,5 +36,6 @@ void isrDefault();
 void isrSecurityError();
 void isrTimerInterrupt();
 void isrKeyboardInterrupt();
+void isrMouseInterrupt();
 
 #endif /*__ISR_H__*/

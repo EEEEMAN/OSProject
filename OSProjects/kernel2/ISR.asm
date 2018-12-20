@@ -3,11 +3,11 @@ global isrNonExistCommand, isrNonExistDevice, isrContinuousException, isrCoproce
 global isrTSSError, isrOverSegment, isrStackSegmentError, isrViolidProtectRule, isrPageFault
 global isrNonDefiled, isrFloatingError, isrAligndError, isrMachineCheckError, isrSIMDError
 global isrVirtualizationError, isrSecurityError, isrTimerInterrupt, isrKeyboardInterrupt
-global isrControlProtectionException
+global isrControlProtectionException, isrMouseInterrupt
 global isrDefault22, isrDefault23, isrDefault24, isrDefault25, isrDefault26
 global isrDefault27, isrDefault28, isrDefault29, isrDefault31, isrDefault
 
-extern defaultHandler, keyboardHandler, testTimerHandler, UnknownHandler
+extern defaultHandler, keyboardHandler, testTimerHandler, mouseHandler, UnknownHandler
 
 INTERRUPTSTACK	equ 0x3fffC
 
@@ -425,6 +425,14 @@ isrKeyboardInterrupt:
 	SAVECONTEXT
 
 	call keyboardHandler
+
+	LOADCONTEXT
+	iret
+
+isrMouseInterrupt:
+	SAVECONTEXT
+
+	call mouseHandler
 
 	LOADCONTEXT
 	iret

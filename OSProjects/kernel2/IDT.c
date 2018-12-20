@@ -54,6 +54,7 @@ void initIDT(DWORD address) {
 		ptIdt[i].flags = IDT_FLAGS_DEFAULT;
 		ptIdt[i].offset2 = ((DWORD) isrDefault >> 16);
 	}
+	setIDTDescriptor(&(ptIdt[44]), isrMouseInterrupt, 0x08, IDT_FLAGS_DEFAULT);
 
 	loadIDT(IDESCRIPTOR_MAX_COUNT * sizeof(IDescripter), ptIdt);
 }

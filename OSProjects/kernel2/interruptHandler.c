@@ -7,8 +7,10 @@
 #include "mString.h"
 #include "mScheduler.h"
 #include "task.h"
+#include "mouseControllor.h"
 
 void defaultHandler(BYTE intNum, BYTE errorCode) {
+	if (intNum == 1) return;
 	cPrintf("Interrupt Occur(%d), ErrorCode:0x%x\n", intNum, errorCode);
 	hltCall();
 }
@@ -30,6 +32,21 @@ void keyboardHandler() {
 		cPrintf("keyboard bufer is full\n");
 	}
 	sendEOI(1);
+}
+
+void mouseHandler(){
+	BYTE scancode;
+	scancode = readKBCBuffer();
+
+	if ((g_MouseBuffer.back + 1) % MOUSE_BUFFER_SIZE
+			!= g_MouseBuffer.front) {
+		g_MouseBuffer.buffer[g_MouseBuffer.back] = scancode;
+		g_MouseBuffer.back = (g_MouseBuffer.back + 1) % MOUSE_BUFFER_SIZE;
+	} else {
+		cPrintf("mouse bufer is full\n");
+	}
+
+	sendEOI(12);
 }
 
 void testTimerHandler() {
